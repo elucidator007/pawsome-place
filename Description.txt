@@ -21,3 +21,7 @@ Priya
 "Design Your Dream Cat" customization tool
 Virtual cat petting game where cats respond to mouse movements
 Weekly cat facts/trivia contests
+
+TODO : 
+1. CAT description.
+2. Social Media cats/forum
