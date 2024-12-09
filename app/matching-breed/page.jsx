@@ -4,21 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BREEDS } from './breeds';
 import { BREED_QUESTIONS } from './breedQuestions';
-
-const traitMappings = {
-  'social_butterfly_or_lone_wolf_1': ['scene_stealer', 'hide_away', 'distant_observer', 'selective_friendly'],
-  'social_butterfly_or_lone_wolf_2': ['attention_seeker', 'background_sleeper', 'occasional_visitor', 'complete_ignorer'],
-  'social_butterfly_or_lone_wolf_3': ['playmate', 'distant_observer', 'hide_away', 'gentle_giant'],
-  'energy_meter_1': ['active_joiner', 'chaos_creator', 'lazy_observer', 'dignified_watcher'],
-  'energy_meter_2': ['midnight_runner', 'sleep_buddy', 'night_patrol', 'distance_keeper'],
-  'energy_meter_3': ['box_claimer', 'part_chaser', 'supervisor', 'distance_keeper'],
-  'maintenance_manual_1': ['quick_brush', 'spa_lover', 'salon_visitor', 'self_sufficient'],
-  'maintenance_manual_2': ['vacuum_cleaner', 'food_critic', 'schedule_keeper', 'grazer'],
-  'maintenance_manual_3': ['brave_warrior', 'dramatic', 'zen_master', 'gentle_giant'],
-  'home_sweet_home_1': ['plant_respecter', 'leaf_hunter', 'curious_inspector', 'grass_only'],
-  'home_sweet_home_2': ['quiet_companion', 'keyboard_assistant', 'paper_reorganizer', 'occasional_visitor'],
-  'home_sweet_home_3': ['silent_watcher', 'chatty_observer', 'sleepy_ignorer', 'dramatic_commentator']
-};
+import { TRAIT_MAPPINGS } from './constants';
 
 const CatBreedQuiz = () => {
   const [mounted, setMounted] = useState(false);
@@ -63,7 +49,7 @@ const CatBreedQuiz = () => {
 
   const calculateMatches = (responses) => {
     const userTraits = Object.entries(responses).map(([question, answer]) => {
-      return traitMappings[question][answer];
+      return TRAIT_MAPPINGS[question][answer];
     });
 
     const matches = BREEDS.breeds.map(breed => ({
@@ -87,68 +73,81 @@ const CatBreedQuiz = () => {
 
   if (quizComplete) {
     return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle>Your Purr-fect Matches! 🐱</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {results.map((match, index) => (
-              <div key={match.breed} className="p-4 bg-slate-50 rounded-lg">
-                <h3 className="text-lg font-semibold">
-                  {index + 1}. {match.breed}
-                </h3>
-                <p className="text-sm text-slate-600 mt-1">
-                  Match Score: {match.score.toFixed(1)}%
-                </p>
-                <p className="text-sm mt-2">
-                  Personality: {match.personality}
-                </p>
-              </div>
-            ))}
-            <Button 
-              onClick={resetQuiz}
-              className="w-full mt-4"
-            >
-              Take Quiz Again
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="min-h-screen bg-gradient-to-br from-[#EEB19C] via-[#f0c3e0] to-[#fecfd5] p-6 font-sans">
+        <Card className="w-full max-w-2xl mx-auto backdrop-blur-sm bg-white/70">
+          <CardHeader className="border-b border-[#EEB19C]/20">
+            <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-[#444444] to-[#EEB19C] text-3xl font-extrabold text-center ubuntu-mono-bold">
+              Your Purr-fect Matches! 🐱
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              {results.map((match, index) => (
+                <div key={match.breed} 
+                  className="p-4 bg-white/50 rounded-lg border border-[#EEB19C]/20 hover:bg-white/60 transition-all"
+                >
+                  <h3 className="text-xl font-bold text-[#444444]" style={{ fontFamily: "'Fredoka', sans-serif" }}>
+                    {index + 1}. {match.breed}
+                  </h3>
+                  <p className="text-base text-[#444444]/80 mt-1" style={{ fontFamily: "'Quicksand', sans-serif" }}>
+                    Match Score: <span className="text-[#EEB19C] font-bold">{match.score.toFixed(1)}%</span>
+                  </p>
+                  <p className="text-base mt-2 text-[#444444]/90" style={{ fontFamily: "'Quicksand', sans-serif" }}>
+                    Personality: <span className="text-[#f0c3e0] font-bold">{match.personality}</span>
+                  </p>
+                </div>
+              ))}
+              <Button 
+                onClick={resetQuiz}
+                className="w-full mt-6 bg-gradient-to-r from-[#EEB19C] to-[#fecfd5] hover:opacity-90 text-white border-none font-bold"
+                style={{ fontFamily: "'Fredoka', sans-serif" }}
+              >
+                Take Quiz Again
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>{currentSectionData.title}</CardTitle>
-        <div className="w-full bg-slate-200 h-2 rounded-full mt-4">
-          <div 
-            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${progressPercentage}%` }}
-          />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <p className="text-lg">
-            {currentSectionData.questions[currentQuestion].situation}
-          </p>
-          <div className="space-y-3">
-            {currentSectionData.questions[currentQuestion].options.map((option, index) => (
-              <Button
-                key={index}
-                onClick={() => handleAnswer(index)}
-                className="w-full text-left justify-start h-auto py-4 px-6"
-                variant="outline"
-              >
-                {option}
-              </Button>
-            ))}
+    <div className="min-h-screen bg-gradient-to-br from-[#EEB19C] via-[#f0c3e0] to-[#fecfd5] p-6">
+      <Card className="w-full max-w-2xl mx-auto backdrop-blur-sm bg-white/30 shadow-xl">
+        <CardHeader className="border-b border-white/20">
+          <CardTitle className="text-[#444444] text-3xl text-center py-2" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
+            {currentSectionData.title}
+          </CardTitle>
+          <div className="w-full bg-white/30 h-3 rounded-full mt-4">
+            <div 
+              className="bg-gradient-to-r from-[#EEB19C] to-[#fecfd5] h-3 rounded-full transition-all duration-300 shadow-lg"
+              style={{ width: `${progressPercentage}%` }}
+            />
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardHeader>
+        <CardContent className="p-8">
+          <div className="space-y-8">
+            <p className="text-xl text-[#444444] leading-relaxed text-center font-medium mb-8">
+              {currentSectionData.questions[currentQuestion].situation}
+            </p>
+            <div className="space-y-4">
+              {currentSectionData.questions[currentQuestion].options.map((option, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleAnswer(index)}
+                  className="w-full text-left py-6 px-8 bg-white/40 hover:bg-white/60 text-[#444444] 
+                  border-2 border-white/40 hover:border-[#EEB19C]/40 rounded-2xl transition-all duration-300
+                  text-lg shadow hover:shadow-lg hover:transform hover:scale-[1.02]"
+                  variant="outline"
+                >
+                  {option}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
