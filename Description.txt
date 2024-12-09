@@ -1,0 +1,23 @@
+COLORS : 
+--primary: #444444;    /* Warm coral */
+--secondary: #EEB19C;  /* Seafoam teal */  
+--accent: #fecfd5;     /* Sunny yellow */
+--neutral: #f0c3e0; 
+
+
+TASKS : 
+
+Ankush
+"Cat Sound Translator" - fun tool pretending to decode cat meows
+Cat adoption listings from nearby shelters
+Cat breed matcher: Users input lifestyle/preferences to find ideal cat breeds
+
+Sakshi
+Local cat meetup organization
+Homepage
+Lost/found cats bulletin board
+
+Priya
+"Design Your Dream Cat" customization tool
+Virtual cat petting game where cats respond to mouse movements
+Weekly cat facts/trivia contests
