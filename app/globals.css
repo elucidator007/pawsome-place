@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+ --primary: #444444;    /* Warm coral */
+ --secondary: #EEB19C;  /* Seafoam teal */  
+ --accent: #fecfd5;     /* Sunny yellow */
+ --neutral: #f0c3e0;    
+}
