@@ -73,3 +73,9 @@
     @apply bg-background text-foreground;    
  }    
 }
+
+.ubuntu-mono-bold {
+    font-family: "Ubuntu Mono", serif;
+    font-weight: 700;
+    font-style: normal;
+}
